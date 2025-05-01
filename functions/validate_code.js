@@ -1,19 +1,10 @@
-export async function onRequestGet(context) {
-  const url = new URL(context.request.url);
-  const code = url.searchParams.get("code");
+export async function onRequestPost({ request }) {
+  const formData = await request.formData();
+  const code = formData.get("code");
 
-  const data = await fetch("https://raw.githubusercontent.com/ravenmindmedia/oyun-indirme-sistemi/main/codes.json")
-    .then(res => res.json());
-
-  const item = data.find(x => x.code === code);
-
-  if (!item) {
-    return new Response("Şifre geçersiz.", { status: 400 });
+  if (code === "ABC123") {
+    return new Response("Kod geçerli! Dosya indirme linki: https://ranemnind.net/oyun.zip");
+  } else {
+    return new Response("Kod geçersiz", { status: 403 });
   }
-
-  if (item.used) {
-    return new Response("Bu şifre zaten kullanılmış.", { status: 400 });
-  }
-
-  return Response.redirect("https://example.com/oyun-dosyasi.zip", 302);
 }
