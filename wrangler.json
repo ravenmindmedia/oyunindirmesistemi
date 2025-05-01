@@ -1,0 +1,5 @@
+{
+  "name": "oyunindirmesistemi",
+  "compatibility_date": "2025-05-01",
+  "main": "functions/validate_code.js"
+}
